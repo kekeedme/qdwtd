@@ -1,0 +1,24 @@
+name: qdwtd
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - bat
+  - black
+  - conda
+  - curl
+  - htop
+  - jq
+  - jupyterlab
+  - make
+  - mamba
+  - pandas
+  - pip
+  - pylint
+  - python>=3.9
+  - scipy
+  - seaborn
+  - setuptools
+  - tree
+  - yaml
+prefix: .
