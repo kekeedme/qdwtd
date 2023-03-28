@@ -48,15 +48,17 @@ if __name__ == "__main__":
     # creating plot and sliders
 
     # plotting the eigenstates
-    fig, (ax1, ax2, ax3) = plt.subplots(3)
+    fig, (ax1, ax2, ax3) = plt.subplots(3,figsize=(6,6))
+    plt.tight_layout()
     fig.suptitle("Infinite Square Well")
     ax1.plot(xvalues, funcvals, "b")
     ax2.plot(xvalues, probadensity, "r")
     ax3.plot(PRINCIPLEQNUMBER, ENERGY, ".")
-    plt.subplots_adjust(bottom=0.2)  # generating space under graph to add slider
+
+    plt.subplots_adjust(bottom=0.2,top=0.95)  # generating space under graph to add slider
 
     ax1.set_ylabel("Wavefunction")
-    ax2.set_xlabel("Lenght")
+    ax1.set_xlabel("Lenght")
     ax2.set_ylabel("Prob density")
     ax3.set_ylabel("Energy [J]")
 
