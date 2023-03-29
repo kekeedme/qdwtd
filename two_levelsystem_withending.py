@@ -13,13 +13,16 @@ def wavefunction(
     :param interaction:the interaction energy between states
     :param energydifference: the energy difference between states
     :param: coefficients 1 and 2: the coefficients specifying the initial population of each states
+    :param: the energy dissipation magnitude
      it:
         -builds the wavefunction at time 0
         -generates the time-independent hamiltonian matrix
         -defines the basis states phi_1 and phi_2
         -generates wavefunction at all times->list
         -calculates the occupation probability of each states
-        -returns the values as float for plotting"""
+        -returns the values as float for plotting
+        -the population is phenomenologically modeled by adding an imaginary term
+        to the off-diagonal term in the Hamiltonian -i*dissipation which is the dissipation"""
 
     # making the time data points
     time = np.linspace(0, 2 * np.pi, 1000)
@@ -30,11 +33,11 @@ def wavefunction(
     psi_0 = (1 / np.sqrt(coefficient1**2 + coefficient2**2)) * np.array(
         [[coefficient1, coefficient2]]
     ).T
-    # Defining the Hamiltonian matrix
+    # Defining the Hamiltonian matrix (making it non hermitian)
     hamiltonian = np.array(
         [[0, interaction], [interaction, energydifference - i * dissipation]]
     )
-    # generating the wavefunction at all times
+    # generating the wavefunction at all times (evolution operator is no longer unitary, so the norm decreases with time)
     psi_time = [expm(-t * hamiltonian * i).dot(psi_0) for t in time]
     # Defining probability for each state at each time point, and only taking the real part
     probability1 = np.real(
@@ -55,8 +58,8 @@ if __name__ == "__main__":
     INTERACTION = 1  # interaction energy
     ENERGYDIFFERENCE = 1  # energy difference
     timepoints = np.linspace(0, 2 * np.pi, 1000)
-    COEFF_1 = 1
-    COEFF_2 = 0
+    COEFF_1 = 0
+    COEFF_2 = 1
     LOSS = 1
     prob1, prob2 = wavefunction(INTERACTION, ENERGYDIFFERENCE, LOSS, COEFF_1, COEFF_2)
 
@@ -74,7 +77,7 @@ if __name__ == "__main__":
         COEFFICIENT1_slider_axis,
         label="c1",
         valmin=-1,
-        valinit=1,
+        valinit=COEFF_1,
         valmax=1,
         valstep=0.1,
     )
@@ -82,7 +85,7 @@ if __name__ == "__main__":
         COEFFICIENT2_slider_axis,
         label="c2",
         valmin=-1,
-        valinit=0,
+        valinit=COEFF_2,
         valmax=1,
         valstep=0.1,
     )

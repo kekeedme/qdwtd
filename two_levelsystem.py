@@ -69,7 +69,7 @@ if __name__ == "__main__":
         COEFFICIENT1_slider_axis,
         label="c1",
         valmin=-1,
-        valinit=1,
+        valinit=COEFF_1,
         valmax=1,
         valstep=0.1,
     )
@@ -77,7 +77,7 @@ if __name__ == "__main__":
         COEFFICIENT2_slider_axis,
         label="c2",
         valmin=-1,
-        valinit=0,
+        valinit=COEFF_2,
         valmax=1,
         valstep=0.1,
     )
