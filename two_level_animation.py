@@ -49,9 +49,8 @@ def wavefunction(interaction, energydifference, coefficient1, coefficient2):
 if __name__ == "__main__":
     i = 1j  # complex i
     INTERACTION = 1  # interaction energy
-    ENERGYDIFFERENCE = 1  # energy difference
+    ENERGYDIFFERENCE = 0  # energy difference
     timepoints = np.linspace(0, 2 * np.pi, 1000)
-    timelist=[time for time in timepoints]
     COEFF_1 = 1
     COEFF_2 = 0
 
@@ -89,4 +88,6 @@ if __name__ == "__main__":
 
 
     ani = animation.FuncAnimation(fig=fig, func=update, frames=1000, interval=10)
+    #animation.Animation.save(filename="two_levelanim",writer=None,fps=None,dpi=None,codec=None,bitrate=None,extra_args=None,metadata=None,extra_anim=None,savefig_kwargs=None, progress_callback=None)
+    ani.save(filename="twolevelanim.gif",writer="Pillow",fps=2)
     plt.show()
