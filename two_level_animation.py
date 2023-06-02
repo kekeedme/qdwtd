@@ -1,9 +1,10 @@
-"""This file contains a function to calculate the occupation probability of a two-level system"""
+"""This file contains a function to calculate the occupation probability of a two-level system
+the plot will be animated"""
+
 import numpy as np
 from scipy.linalg import expm
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider
-
+import matplotlib.animation as animation
 
 def wavefunction(interaction, energydifference, coefficient1, coefficient2):
     """This function returns the occupation probability of states in a two-level system
@@ -45,12 +46,12 @@ def wavefunction(interaction, energydifference, coefficient1, coefficient2):
     prob22 = [float(p2) for p2 in probability2]
     return prob11, prob22
 
-
 if __name__ == "__main__":
     i = 1j  # complex i
     INTERACTION = 1  # interaction energy
     ENERGYDIFFERENCE = 1  # energy difference
     timepoints = np.linspace(0, 2 * np.pi, 1000)
+    timelist=[time for time in timepoints]
     COEFF_1 = 1
     COEFF_2 = 0
 
@@ -59,71 +60,33 @@ if __name__ == "__main__":
     # creating figure object and subplot to add to the figure
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111)
-    # creating axes to add sliders
-    COEFFICIENT1_slider_axis = fig.add_axes([0.15, 0.92, 0.65, 0.05])
-    COEFFICIENT2_slider_axis = fig.add_axes([0.15, 0.87, 0.65, 0.05])
-    INTERACTIONENERGY_slider_axis = fig.add_axes([0.15, 0.82, 0.65, 0.05])
-    DELTA_slider_axis = fig.add_axes([0.15, 0.77, 0.65, 0.05])
-    # creating the sliders
-    COEFFICIENT1_slider = Slider(
-        COEFFICIENT1_slider_axis,
-        label="c1",
-        valmin=-1,
-        valinit=COEFF_1,
-        valmax=1,
-        valstep=0.1,
-    )
-    COEFFICIENT2_slider = Slider(
-        COEFFICIENT2_slider_axis,
-        label="c2",
-        valmin=-1,
-        valinit=COEFF_2,
-        valmax=1,
-        valstep=0.1,
-    )
-    DELTA_slider = Slider(
-        DELTA_slider_axis, label="\u0394", valmin=-10, valmax=10, valinit=1, valstep=1
-    )
-    INTERACTIONENERGY_slider = Slider(
-        INTERACTIONENERGY_slider_axis,
-        label="V",
-        valmin=-4,
-        valmax=4,
-        valinit=1,
-        valstep=0.5,
-    )
+
     # making the plot
-    ax.plot(timepoints, prob1)
-    ax.plot(timepoints, prob2)
+    line1=ax.plot(timepoints[0], prob1[0],label=f'c1_0={1}, V={1},\u0394={1}')[0]
+    line2=ax.plot(timepoints[0], prob2[0],label=f"c2_0={0}")[0]
     ax.set_xlabel("time [a.u.]", fontsize=15)
     ax.set_ylabel("Probability", fontsize=15)
+    ax.set(xlim=[0, 7], ylim=[0,1.1])
+    ax.legend()
     plt.subplots_adjust(bottom=0.25, top=0.7)
 
-    def update(val):
+    def update(frames):
         """This function will update the graphs every time the slider is used
         It will make a function call to wavefunction
         It will clear the previous plots and make new plots on the same fig objects
         """
-        unused_value = val  # avoiding pylint error of unused value
-        currentcoefficient1 = COEFFICIENT1_slider.val
-        currentcoefficient2 = COEFFICIENT2_slider.val
-        currentinteraction = INTERACTIONENERGY_slider.val
-        currentdifference = DELTA_slider.val
-        proba1, proba2 = wavefunction(
-            currentinteraction,
-            currentdifference,
-            currentcoefficient1,
-            currentcoefficient2,
-        )
-        ax.cla() #clear the plot every time the function is called, before plotting again
-        ax.plot(timepoints, proba1)
-        ax.plot(timepoints, proba2)
-        ax.set_xlabel("time [a.u.]", fontsize=15)
-        ax.set_ylabel("Probability", fontsize=15)
-    #When the slider values are changed, the update function is call
-    COEFFICIENT1_slider.on_changed(update)
-    COEFFICIENT2_slider.on_changed(update)
-    INTERACTIONENERGY_slider.on_changed(update)
-    DELTA_slider.on_changed(update)
+        #unused_value = val  # avoiding pylint error of unused value
+        tval = timepoints[:frames]
+        yval1 = prob1[:frames]
+        yval2 = prob2[:frames]
+        # update plots
+        line1.set_xdata(tval)
+        line1.set_ydata(yval1)
+        line2.set_xdata(tval)
+        line2.set_ydata(yval2)
+        return (line1,line2)
 
+
+
+    ani = animation.FuncAnimation(fig=fig, func=update, frames=1000, interval=10)
     plt.show()
