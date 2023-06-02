@@ -4,6 +4,7 @@ channels:
   - defaults
 dependencies:
   - bat
+  - ffmpeg
   - black
   - conda
   - curl
