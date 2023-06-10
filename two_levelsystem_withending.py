@@ -109,8 +109,9 @@ if __name__ == "__main__":
         valstep=0.5,
     )
     # making the plot
-    ax.plot(timepoints, prob1)
-    ax.plot(timepoints, prob2)
+    ax.plot(timepoints, prob1,label=f'$P_1(t)$')
+    ax.plot(timepoints, prob2,label=f'$P_2(t)$')
+    ax.legend(bbox_to_anchor=(1.14, 0.6), loc='center right', frameon=False)
     ax.set_xlabel("time [a.u.]", fontsize=15)
     ax.set_ylabel("Probability", fontsize=15)
     plt.subplots_adjust(bottom=0.25, top=0.7)
@@ -134,8 +135,9 @@ if __name__ == "__main__":
             currentcoefficient2,
         )
         ax.cla()  # clear the plot every time the function is called, before plotting again
-        ax.plot(timepoints, proba1)
-        ax.plot(timepoints, proba2)
+        ax.plot(timepoints, proba1,label=f'$P_1(t)$')
+        ax.plot(timepoints, proba2,label=f'$P_2(t)$')
+        ax.legend(bbox_to_anchor=(1.14, 0.6), loc='center right', frameon=False)
         ax.set_xlabel("time [a.u.]", fontsize=15)
         ax.set_ylabel("Probability", fontsize=15)
 
