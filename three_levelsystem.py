@@ -56,7 +56,7 @@ if __name__ == "__main__":
     i = 1j  # complex i
     INTERACTION = 1  # interaction energy
     ENERGYDIFFERENCE = 1  # energy difference
-    timepoints = np.linspace(0, 6 * np.pi, 1000)
+    timepoints = np.linspace(0, 6.5 * np.pi, 1000)
     COEFF_1 = 1
     COEFF_2 = 0
     COEFF_3 = 0
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     ax.plot(timepoints, prob1,label=f'$P_1(t)$')
     ax.plot(timepoints, prob2,label=f'$P_2(t)$')
     ax.plot(timepoints, prob3,label=f'$P_3(t)$')
-    ax.set(xlim=[0, 19.05], ylim=[0, 1.1])
+    ax.set(xlim=[0, 21], ylim=[0, 1.1])
     ax.set_xlabel("time [a.u.]", fontsize=15)
     ax.set_ylabel("Probability", fontsize=15)
     ax.legend(bbox_to_anchor=(1.14, 0.6),loc='center right',frameon=False)
@@ -147,7 +147,7 @@ if __name__ == "__main__":
         #bbox_to_anchor allows the legend to be placed out
         ax.set_xlabel("time [a.u.]", fontsize=15)
         ax.set_ylabel("Probability", fontsize=15)
-        ax.set(xlim=[0, 20.5], ylim=[0, 1.1])
+        ax.set(xlim=[0, 21], ylim=[0, 1.1])
 
     #When the slider values are changed, the update function is call
     COEFFICIENT1_slider.on_changed(update)
